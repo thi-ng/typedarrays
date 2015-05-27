@@ -5,6 +5,9 @@
      - [[#todo-add-arraybufferview-fns][TODO add ArrayBufferView fns]]
      - [[#templates][Templates]]
      - [[#typed-array-constructors][Typed array constructors]]
+         - [[#conversion-of-cljs-sequences][Conversion of CLJS sequences]]
+         - [[#create-fixed-length-buffers][Create fixed-length buffers]]
+         - [[#implementations][Implementations]]
      - [[#helpers][Helpers]]
      - [[#complete-namespace-definition][Complete namespace definition]]
 
@@ -34,6 +37,26 @@
 
 ** Typed array constructors
 
+*** Conversion of CLJS sequences
+
+#+BEGIN_SRC clojure
+  (prn (tarrays/float32 [1 2 3 4]))
+  ;; [1, 2, 3, 4]
+  (prn (tarrays/uint8 [1 -2 259 -128]))
+  ;; [1, 254, 3, 128]
+#+END_SRC
+
+*** Create fixed-length buffers
+
+#+BEGIN_SRC clojure
+  (prn (tarrays/int32 4))
+  ;; [0, 0, 0, 0]
+#+END_SRC
+
+*** Implementations
+
+The array constructors are all generated from the above template:
+
 #+BEGIN_SRC clojure :noweb-ref ctors :noweb yes
   <<tpl-ctor(fn="int8", type="Int8Array")>>
 
@@ -57,17 +80,31 @@
 ** Helpers
 
 #+BEGIN_SRC clojure :noweb-ref helpers
+  (defn typed-arrays-supported?
+    "Returns true if JS runtime supports typed arrays"
+    [] (not (nil? (aget js/window "ArrayBuffer"))))
+
+  (def ^:private array-types
+    {"[object Uint8Array]"        :uint8
+     "[object Uint8ClampedArray]" :uint8-clamped
+     "[object Uint16Array]"       :uint16
+     "[object Uint32Array]"       :uint32
+     "[object Int8Array]"         :int8
+     "[object Int16Array]"        :int16
+     "[object Int32Array]"        :int32
+     "[object Float32Array]"      :float32
+     "[object Float64Array]"      :float64})
+
+  (defn array-type
+    [x] (array-types (.toString x)))
+
   (defn typed-array?
+    "Returns truthy value if the given arg is a typed array instance"
     [x]
     (cond
-     (sequential? x) false
-     (number? x)     false
-     :else (let [t (type x)]
-             (or
-              (= t js/Float32Array) (= t js/Int32Array)
-              (= t js/Float64Array) (= t js/Uint32Array)
-              (= t js/Int8Array)    (= t js/Uint8Array)  (= t js/Uint8ClampedArray)
-              (= t js/Int16Array)   (= t js/Uint16Array)))))
+      (sequential? x) false
+      (number? x)     false
+      :else (array-type x)))
 #+END_SRC
 
 ** Complete namespace definition

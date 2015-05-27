@@ -11,7 +11,15 @@
 
 #+BEGIN_SRC clojure :noweb-ref test
   (deftest test-ctors
-    (is true))
+    (is (= :uint8 (a/array-type (a/uint8 1))))
+    (is (= :uint8-clamped (a/array-type (a/uint8-clamped 1))))
+    (is (= :int8 (a/array-type (a/int8 1))))
+    (is (= :uint16 (a/array-type (a/uint16 1))))
+    (is (= :int16 (a/array-type (a/int16 1))))
+    (is (= :uint32 (a/array-type (a/uint32 1))))
+    (is (= :int32 (a/array-type (a/int32 1))))
+    (is (= :float32 (a/array-type (a/float32 1))))
+    (is (= :float64 (a/array-type (a/float64 1)))))
 #+END_SRC
 
 ** Complete namespace definition
@@ -20,7 +28,13 @@
   (ns thi.ng.typedarrays.test.core
     (:require
      [thi.ng.typedarrays.core :as a]
-     [cemerick.cljs.test :refer-macros [is deftest]]))
+     [cemerick.cljs.test :as t :refer-macros [is deftest]]))
+
+  (enable-console-print!)
 
   <<test>>
+
+  (if (a/typed-arrays-supported?)
+    (t/run-all-tests)
+    (prn "Can't test - typed arrays not supported!"))
 #+END_SRC

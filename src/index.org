@@ -16,7 +16,6 @@
      - [[#leiningen-coordinates][Leiningen coordinates]]
      - [[#building-this-project][Building this project]]
          - [[#testing][Testing]]
-         - [[#working-with-the-repl][Working with the REPL]]
      - [[#leiningen-project-file][Leiningen project file]]
      - [[#clojurescript-html-harness][ClojureScript HTML harness]]
      - [[#accessing-library-version-during-runtime][Accessing library version during runtime]]
@@ -32,10 +31,6 @@
 This small library provides constructors & Clojurescript sequence converters
 for JavaScript typed arrays.
 
- *Note:* This library relies on the new
-conditional reader syntax of recent Clojure & Clojurescript versions
-and therefore is *not compatible with Clojure versions < 1.7.0*...
-
 * Namespaces
 
 - [[./core.org][thi.ng.typedarrays.core]]
@@ -49,7 +44,7 @@ and therefore is *not compatible with Clojure versions < 1.7.0*...
 ** Injected properties                                             :noexport:
 
 #+BEGIN_SRC clojure :noweb-ref version
-0.1.0
+0.1.1-SNAPSHOT
 #+END_SRC
 #+BEGIN_SRC clojure :exports none :noweb-ref project-url
 http://thi.ng/typedarrays
@@ -81,7 +76,7 @@ target/typedarrays-<<version>>.js
 ** Leiningen coordinates
 
 #+BEGIN_SRC clojure :noweb yes :noweb-ref lein-coords
-  [thi.ng/typedarrays "0.1.0"]
+  [thi.ng/typedarrays "0.1.1-SNAPSHOT"]
 #+END_SRC
 
 ** Building this project
@@ -106,25 +101,20 @@ is complete, you can =cd= into the generated project directory
 *** Testing
 
 The =project.clj= file defines an alias to trigger a complete build &
-tests for both CLJ & CLJS versions.
+tests. Since PhantomJS (the usual test runner for other thi.ng
+projects) doesn't support typed arrays, the =cleantest= command will
+run the tests in your default browser. Test results are displayed in
+the dev console.
 
 #+BEGIN_SRC bash
   cd babel
   lein cleantest
 #+END_SRC
 
-To build the Clojurescript version simply run =lein cljsbuild test=
-from the same directory. A small HTML harness for the resulting JS
-file is also located in that folder (=babel/index.html=), allowing for
-further experimentation in the browser.
-
-*** Working with the REPL
-
-Editing code blocks or files in Org-mode, then re-loading & testing
-changes is quite trivial. Simply launch a REPL (via =lein= or Emacs)
-as usual. Everytime you've made changes to an =.org= file, re-tangle
-it from Emacs (=C-c C-v t=) or =tangle.sh=, then reload the namespace
-in the REPL via =(require 'thi.ng.typedarrays... :reload)= or similar.
+Tangling this file will also generate a small HTML harness for the
+resulting JS file and will be placed in the main folder
+(=babel/index.html=), allowing for further experimentation in the
+browser.
 
 ** Leiningen project file                                          :noexport:
 
@@ -139,7 +129,7 @@ in the REPL via =(require 'thi.ng.typedarrays... :reload)= or similar.
                    :url "git@github.com:thi-ng/typedarrays.git"}
 
     :min-lein-vesion "2.4.0"
-    
+
     :dependencies [<<dep-clj>>
                    <<dep-cljs>>]
 
@@ -154,7 +144,7 @@ in the REPL via =(require 'thi.ng.typedarrays... :reload)= or similar.
                              :compiler {:output-to "<<cljs-artefact-path>>"
                                         :optimizations :whitespace
                                         :pretty-print true}}]
-                   :test-commands {"unit-tests" ["phantomjs" :runner "<<cljs-artefact-path>>"]}}
+                   :test-commands {"unit-tests" ["open" :runner "index.html"]}}
 
     :pom-addition [:developers [:developer
                                 [:name "Karsten Schmidt"]
