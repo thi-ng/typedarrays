@@ -96,7 +96,7 @@ The array constructors are all generated from the above template:
      "[object Float64Array]"      :float64})
 
   (defn array-type
-    [x] (array-types (.toString x)))
+    [x] (if (array? x) :array (array-types (str x))))
 
   (defn typed-array?
     "Returns truthy value if the given arg is a typed array instance"
@@ -104,7 +104,7 @@ The array constructors are all generated from the above template:
     (cond
       (sequential? x) false
       (number? x)     false
-      :else (array-type x)))
+      :else (array-types (str x))))
 #+END_SRC
 
 ** Complete namespace definition

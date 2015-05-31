@@ -44,7 +44,7 @@ for JavaScript typed arrays.
 ** Injected properties                                             :noexport:
 
 #+BEGIN_SRC clojure :noweb-ref version
-0.1.1-SNAPSHOT
+0.1.1
 #+END_SRC
 #+BEGIN_SRC clojure :exports none :noweb-ref project-url
 http://thi.ng/typedarrays
@@ -76,7 +76,7 @@ target/typedarrays-<<version>>.js
 ** Leiningen coordinates
 
 #+BEGIN_SRC clojure :noweb yes :noweb-ref lein-coords
-  [thi.ng/typedarrays "0.1.1-SNAPSHOT"]
+  [thi.ng/typedarrays "0.1.1"]
 #+END_SRC
 
 ** Building this project
@@ -190,6 +190,7 @@ symbol =version= holding the version string defined above:
 
 | *Version* | *Released* | *Description*        | *Lein coordinates*             | *Tagged Github URL* |
 |-----------+------------+----------------------+--------------------------------+---------------------|
+|     0.1.1 | 2015-05-31 | update array check   | =[thi.ng/typedarrays "0.1.1"]= | [[https://github.com/thi-ng/typedarrays/tree/0.1.1][0.1.1]]               |
 |     0.1.0 | 2015-05-26 | initial test release | =[thi.ng/typedarrays "0.1.0"]= | [[https://github.com/thi-ng/typedarrays/tree/0.1.0][0.1.0]]               |
 
 ** Contributors
