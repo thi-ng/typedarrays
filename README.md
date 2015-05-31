@@ -7,5 +7,5 @@ Please see [index.org](src/index.org) for further information.
 ## Current Leiningen coordinates
 
 ```clj
-[thi.ng/typedarrays "0.1.0"]
+[thi.ng/typedarrays "0.1.1"]
 ```
