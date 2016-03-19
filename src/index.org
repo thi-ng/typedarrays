@@ -13,7 +13,6 @@
      - [[#dependencies][Dependencies]]
          - [[#runtime][Runtime]]
          - [[#development][Development]]
-     - [[#leiningen-coordinates][Leiningen coordinates]]
      - [[#building-this-project][Building this project]]
          - [[#testing][Testing]]
      - [[#leiningen-project-file][Leiningen project file]]
@@ -71,12 +70,6 @@ target/typedarrays-<<version>>.js
 **** [[https://github.com/emezeske/lein-cljsbuild][Cljsbuild]]
 #+BEGIN_SRC clojure :noweb-ref dep-cljsbuild
 [lein-cljsbuild "1.1.3"]
-#+END_SRC
-
-** Leiningen coordinates
-
-#+BEGIN_SRC clojure :noweb yes :noweb-ref lein-coords
-  [thi.ng/typedarrays "0.1.1"]
 #+END_SRC
 
 ** Building this project
