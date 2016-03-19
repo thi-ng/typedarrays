@@ -11,15 +11,22 @@
 
 #+BEGIN_SRC clojure :noweb-ref test
   (deftest test-ctors
-    (is (= :uint8 (a/array-type (a/uint8 1))))
-    (is (= :uint8-clamped (a/array-type (a/uint8-clamped 1))))
-    (is (= :int8 (a/array-type (a/int8 1))))
-    (is (= :uint16 (a/array-type (a/uint16 1))))
-    (is (= :int16 (a/array-type (a/int16 1))))
-    (is (= :uint32 (a/array-type (a/uint32 1))))
-    (is (= :int32 (a/array-type (a/int32 1))))
-    (is (= :float32 (a/array-type (a/float32 1))))
-    (is (= :float64 (a/array-type (a/float64 1)))))
+    (is (= :uint8 (ta/array-type (ta/uint8 1))))
+    (is (= :uint8-clamped (ta/array-type (ta/uint8-clamped 1))))
+    (is (= :int8 (ta/array-type (ta/int8 1))))
+    (is (= :uint16 (ta/array-type (ta/uint16 1))))
+    (is (= :int16 (ta/array-type (ta/int16 1))))
+    (is (= :uint32 (ta/array-type (ta/uint32 1))))
+    (is (= :int32 (ta/array-type (ta/int32 1))))
+    (is (= :float32 (ta/array-type (ta/float32 1))))
+    (is (= :float64 (ta/array-type (ta/float64 1))))
+    (is (= :array (ta/array-type #js [1])))
+    (is (nil? (ta/array-type "array")))
+    (is (nil? (ta/array-type 1)))
+    (is (not (ta/typed-array? 1)))
+    (is (not (ta/typed-array? [1])))
+    (is (not (ta/typed-array? #js [1])))
+    (is (ta/typed-array? (ta/uint8 1))))
 #+END_SRC
 
 ** Complete namespace definition
@@ -27,14 +34,14 @@
 #+BEGIN_SRC clojure :tangle ../babel/test/thi/ng/typedarrays/test/core.cljs :noweb yes :mkdirp yes :padline no
   (ns thi.ng.typedarrays.test.core
     (:require
-     [thi.ng.typedarrays.core :as a]
+     [thi.ng.typedarrays.core :as ta]
      [cemerick.cljs.test :as t :refer-macros [is deftest]]))
 
   (enable-console-print!)
 
   <<test>>
 
-  (if (a/typed-arrays-supported?)
+  (if (ta/typed-arrays-supported?)
     (t/run-all-tests)
     (prn "Can't test - typed arrays not supported!"))
 #+END_SRC

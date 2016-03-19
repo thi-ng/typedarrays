@@ -21,18 +21,20 @@
 #+BEGIN_SRC emacs-lisp :var fn="" :var type=""
   (replace-regexp-in-string "{{fn}}" fn
    (replace-regexp-in-string "{{type}}" type
-  "(defn {{fn}}
+   "(defn {{fn}}
     \"Creates a native {{type}} of the given size or from `coll`.\"
-     [size-or-coll]
-     (if (number? size-or-coll)
-       (js/{{type}}. size-or-coll)
-       (let [len (count size-or-coll)
-             buf (js/{{type}}. len)]
-         (loop [i 0, coll size-or-coll]
-           (when (< i len)
-             (aset buf i (first coll))
-             (recur (inc i) (next coll))))
-         buf)))"))
+    [size-or-coll]
+    (cond
+      (number? size-or-coll)      (js/{{type}}. size-or-coll)
+      (typed-array? size-or-coll) size-or-coll
+      :else
+      (let [len (count size-or-coll)
+            buf (js/{{type}}. len)]
+        (loop [i 0, coll size-or-coll]
+          (when (< i len)
+            (aset buf i (first coll))
+            (recur (inc i) (next coll))))
+        buf)))"))
 #+END_SRC
 
 ** Typed array constructors
@@ -85,26 +87,33 @@ The array constructors are all generated from the above template:
     [] (not (nil? (aget js/window "ArrayBuffer"))))
 
   (def ^:private array-types
-    {"[object Uint8Array]"        :uint8
-     "[object Uint8ClampedArray]" :uint8-clamped
-     "[object Uint16Array]"       :uint16
-     "[object Uint32Array]"       :uint32
-     "[object Int8Array]"         :int8
-     "[object Int16Array]"        :int16
-     "[object Int32Array]"        :int32
-     "[object Float32Array]"      :float32
-     "[object Float64Array]"      :float64})
-
-  (defn array-type
-    [x] (if (array? x) :array (array-types (str x))))
+    {"Uint8Array"        :uint8
+     "Uint8ClampedArray" :uint8-clamped
+     "Uint16Array"       :uint16
+     "Uint32Array"       :uint32
+     "Int8Array"         :int8
+     "Int16Array"        :int16
+     "Int32Array"        :int32
+     "Float32Array"      :float32
+     "Float64Array"      :float64})
 
   (defn typed-array?
     "Returns truthy value if the given arg is a typed array instance"
     [x]
-    (cond
-      (sequential? x) false
-      (number? x)     false
-      :else (array-types (str x))))
+    (if (= "object" (goog/typeOf x))
+      (if (number? (.-BYTES_PER_ELEMENT x))
+        (.-buffer x))))
+
+  (defn array-type
+    [x]
+    (if (array? x)
+      :array
+      (if (typed-array? x)
+        (->> (.-constructor x)
+             str
+             (re-find #"((Uint|Int|Float)\d+(Clamped)?Array)")
+             first
+             (get array-types)))))
 #+END_SRC
 
 ** Complete namespace definition
@@ -112,7 +121,7 @@ The array constructors are all generated from the above template:
 #+BEGIN_SRC clojure :tangle ../babel/src/thi/ng/typedarrays/core.cljs :noweb yes :mkdirp yes :padline no
   (ns thi.ng.typedarrays.core)
 
-  <<ctors>>
-
   <<helpers>>
+
+  <<ctors>>
 #+END_SRC
