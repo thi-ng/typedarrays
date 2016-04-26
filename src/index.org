@@ -24,7 +24,6 @@
      - [[#license][License]]
 
 * About the project
-
 ** Description
 
 This small library provides constructors & Clojurescript sequence converters
@@ -41,9 +40,8 @@ for JavaScript typed arrays.
 * Project definition
 
 ** Injected properties                                             :noexport:
-
 #+BEGIN_SRC clojure :noweb-ref version
-0.1.3
+0.1.4
 #+END_SRC
 #+BEGIN_SRC clojure :exports none :noweb-ref project-url
 http://thi.ng/typedarrays

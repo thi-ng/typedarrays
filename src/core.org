@@ -24,16 +24,14 @@
    "(defn {{fn}}
     \"Creates a native {{type}} of the given size or from `coll`.\"
     [size-or-coll]
-    (cond
-      (number? size-or-coll)      (js/{{type}}. size-or-coll)
-      (typed-array? size-or-coll) size-or-coll
-      :else
+    (if (or (number? size-or-coll) (typed-array? size-or-coll))
+      (js/{{type}}. size-or-coll)
       (let [len (count size-or-coll)
             buf (js/{{type}}. len)]
-        (loop [i 0, coll size-or-coll]
-          (when (< i len)
+        (loop [i len, coll size-or-coll]
+          (when (pos? i)
             (aset buf i (first coll))
-            (recur (inc i) (next coll))))
+            (recur (dec i) (next coll))))
         buf)))"))
 #+END_SRC
 

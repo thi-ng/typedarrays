@@ -21,6 +21,8 @@
     (is (= :float32 (ta/array-type (ta/float32 1))))
     (is (= :float64 (ta/array-type (ta/float64 1))))
     (is (= :array (ta/array-type #js [1])))
+    (is (= :uint32 (ta/array-type (ta/uint32 (ta/uint8 1)))))
+    (is (= 4 (.-length (ta/uint8 [1 2 3 4]))))
     (is (nil? (ta/array-type "array")))
     (is (nil? (ta/array-type 1)))
     (is (not (ta/typed-array? 1)))
