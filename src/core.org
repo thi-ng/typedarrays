@@ -14,7 +14,6 @@
 * thi.ng.typedarrays.core
 
 ** TODO add ArrayBufferView fns
-
 ** Templates
 
 #+NAME: tpl-ctor
@@ -22,17 +21,25 @@
   (replace-regexp-in-string "{{fn}}" fn
    (replace-regexp-in-string "{{type}}" type
    "(defn {{fn}}
-    \"Creates a native {{type}} of the given size or from `coll`.\"
+    \"Creates a native {{type}} of the given size or from `coll`
+    If arg already is a typed array then a copy is created.\"
     [size-or-coll]
-    (if (or (number? size-or-coll) (typed-array? size-or-coll))
-      (js/{{type}}. size-or-coll)
+    (cond
+      (number? size-or-coll) (js/{{type}}. size-or-coll)
+      (typed-array? size-or-coll) (js/{{type}}. size-or-coll)
+      :else
       (let [len (count size-or-coll)
             buf (js/{{type}}. len)]
-        (loop [i len, coll size-or-coll]
-          (when (pos? i)
+        (loop [i 0, coll size-or-coll]
+          (when (< i len)
             (aset buf i (first coll))
-            (recur (dec i) (next coll))))
-        buf)))"))
+            (recur (inc i) (next coll))))
+        buf)))
+
+  (defn {{fn}}-view
+    \"Creates a {{type}} view of the given typed array's
+    underlying ArrayBuffer.\"
+    [a] (js/{{type}}. (.-buffer a)))"))
 #+END_SRC
 
 ** Typed array constructors
