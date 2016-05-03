@@ -27,7 +27,7 @@
 ** Description
 
 This small library provides constructors & Clojurescript sequence converters
-for JavaScript typed arrays.
+for JavaScript typed arrays and ArrayBuffers.
 
 * Namespaces
 
@@ -41,7 +41,7 @@ for JavaScript typed arrays.
 
 ** Injected properties                                             :noexport:
 #+BEGIN_SRC clojure :noweb-ref version
-0.1.5
+0.1.6-SNAPSHOT
 #+END_SRC
 #+BEGIN_SRC clojure :exports none :noweb-ref project-url
 http://thi.ng/typedarrays
