@@ -38,8 +38,10 @@
 
   (defn {{fn}}-view
     \"Creates a {{type}} view of the given typed array's
-    underlying ArrayBuffer.\"
-    [a] (js/{{type}}. (.-buffer a)))"))
+    underlying ArrayBuffer, optionally from given byte offset
+    and item length.\"
+    ([a] (js/{{type}}. (.-buffer a)))
+    ([a offset len] (js/{{type}}. (.-buffer a) offset len)))"))
 #+END_SRC
 
 ** Typed array constructors
