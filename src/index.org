@@ -181,6 +181,7 @@ symbol =version= holding the version string defined above:
 
 | *Version* | *Released* | *Description*                                 | *Tagged Github URL* |
 |-----------+------------+-----------------------------------------------+---------------------|
+|     0.1.6 | 2016-07-02 | add .slice polyfill, update cljs dep          | [[https://github.com/thi-ng/typedarrays/tree/0.1.6][0.1.6]]               |
 |     0.1.5 | 2016-04-28 | add array view fns, bugfix ctors, update deps | [[https://github.com/thi-ng/typedarrays/tree/0.1.5][0.1.5]]               |
 |     0.1.3 | 2016-03-19 | bugfix TA check, update ctors                 | [[https://github.com/thi-ng/typedarrays/tree/0.1.3][0.1.3]]               |
 |     0.1.2 | 2015-06-04 | remove obsolete namespaces                    | [[https://github.com/thi-ng/typedarrays/tree/0.1.2][0.1.2]]               |
