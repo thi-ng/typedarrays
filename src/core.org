@@ -9,6 +9,7 @@
          - [[#create-fixed-length-buffers][Create fixed-length buffers]]
          - [[#implementations][Implementations]]
      - [[#helpers][Helpers]]
+     - [[#polyfills][Polyfills]]
      - [[#complete-namespace-definition][Complete namespace definition]]
 
 * thi.ng.typedarrays.core
@@ -123,12 +124,46 @@ The array constructors are all generated from the above template:
              (get array-types)))))
 #+END_SRC
 
+** Polyfills
+
+Polyfill for =.slice= prototype method currently still missing in
+Safari and some mobile browser versions:
+
+#+BEGIN_SRC clojure :noweb-ref polyfill
+  (when typed-arrays-supported?
+    (run!
+     (fn [type]
+       (when-not (.. (aget js/self type) -prototype -slice)
+         (set! (.. (aget js/self type) -prototype -slice)
+               (fn [from to]
+                 (this-as this
+                   (let [from (if (neg? from)
+                                (int (+ (.-length this) from))
+                                (int from))
+                         to   (if (goog/isNumber to)
+                                (if (neg? to)
+                                  (int (+ (.-length this) to))
+                                  (Math/min to (.-length this)))
+                                (.-length this))
+                         len  (Math/max (- to from) 0)
+                         ctor (.-constructor this)
+                         dest (js* "new ~{}(~{})" ctor len)]
+                     (loop [i 0]
+                       (when (< i len)
+                         (aset dest i (aget this (+ from i)))
+                         (recur (inc i))))
+                     dest))))))
+     (keys array-types)))
+#+END_SRC
+
 ** Complete namespace definition
 
 #+BEGIN_SRC clojure :tangle ../babel/src/thi/ng/typedarrays/core.cljs :noweb yes :mkdirp yes :padline no
   (ns thi.ng.typedarrays.core)
 
   <<helpers>>
+
+  <<polyfill>>
 
   <<ctors>>
 #+END_SRC
