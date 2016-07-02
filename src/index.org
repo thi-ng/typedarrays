@@ -194,11 +194,6 @@ symbol =version= holding the version string defined above:
 |-----------------+---------------------------------+----------------------------|
 | [[k@thi.ng][Karsten Schmidt]] | initiator & principal developer | http://postspectacular.com |
 
-I've got a fairly detailed roadmap and task list to implement over the
-coming months, but am always happy to receive feedback & suggestions
-and have issues filed. Once the core engine is more refined I'll be
-gladly welcoming other contributions. Thanks for understanding!
-
 ** License
 
 This project is open source and licensed under the [[http://www.apache.org/licenses/LICENSE-2.0][Apache Software License 2.0]].
