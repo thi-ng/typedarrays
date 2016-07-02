@@ -41,7 +41,7 @@ for JavaScript typed arrays and ArrayBuffers.
 
 ** Injected properties                                             :noexport:
 #+BEGIN_SRC clojure :noweb-ref version
-0.1.6-SNAPSHOT
+0.1.6
 #+END_SRC
 #+BEGIN_SRC clojure :exports none :noweb-ref project-url
 http://thi.ng/typedarrays
@@ -58,7 +58,7 @@ target/typedarrays-<<version>>.js
 #+END_SRC
 **** [[https://github.com/clojure/clojurescript][ClojureScript]]
 #+BEGIN_SRC clojure :noweb-ref dep-cljs
-[org.clojure/clojurescript "1.8.51"]
+[org.clojure/clojurescript "1.9.89"]
 #+END_SRC
 *** Development
 **** [[https://github.com/cemerick/clojurescript.test][clojurescript.test]]
