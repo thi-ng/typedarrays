@@ -41,7 +41,7 @@ for JavaScript typed arrays and ArrayBuffers.
 
 ** Injected properties                                             :noexport:
 #+BEGIN_SRC clojure :noweb-ref version
-0.1.6
+0.1.7
 #+END_SRC
 #+BEGIN_SRC clojure :exports none :noweb-ref project-url
 http://thi.ng/typedarrays
@@ -54,11 +54,11 @@ target/typedarrays-<<version>>.js
 *** Runtime
 **** [[https://github.com/clojure/clojure][Clojure]]
 #+BEGIN_SRC clojure :noweb-ref dep-clj
-[org.clojure/clojure "1.8.0"]
+[org.clojure/clojure "1.11.1"]
 #+END_SRC
 **** [[https://github.com/clojure/clojurescript][ClojureScript]]
 #+BEGIN_SRC clojure :noweb-ref dep-cljs
-[org.clojure/clojurescript "1.9.89"]
+[org.clojure/clojurescript "1.11.4"]
 #+END_SRC
 *** Development
 **** [[https://github.com/cemerick/clojurescript.test][clojurescript.test]]
@@ -67,7 +67,7 @@ target/typedarrays-<<version>>.js
 #+END_SRC
 **** [[https://github.com/emezeske/lein-cljsbuild][Cljsbuild]]
 #+BEGIN_SRC clojure :noweb-ref dep-cljsbuild
-[lein-cljsbuild "1.1.3"]
+[lein-cljsbuild "1.1.8"]
 #+END_SRC
 
 ** Building this project
@@ -139,8 +139,8 @@ browser.
 
     :pom-addition [:developers [:developer
                                 [:name "Karsten Schmidt"]
-                                [:url "http://postspectacular.com"]
-                                [:timezone "0"]]])
+                                [:url "https://thi.ng"]
+                                [:timezone "1"]]])
 #+END_SRC
 
 ** ClojureScript HTML harness                                      :noexport:
@@ -181,6 +181,7 @@ symbol =version= holding the version string defined above:
 
 | *Version* | *Released* | *Description*                                 | *Tagged Github URL* |
 |-----------+------------+-----------------------------------------------+---------------------|
+|     0.1.7 | 2022-04-23 | update description                            | [[https://github.com/thi-ng/typedarrays/tree/0.1.7][0.1.7]]               |
 |     0.1.6 | 2016-07-02 | add .slice polyfill, update cljs dep          | [[https://github.com/thi-ng/typedarrays/tree/0.1.6][0.1.6]]               |
 |     0.1.5 | 2016-04-28 | add array view fns, bugfix ctors, update deps | [[https://github.com/thi-ng/typedarrays/tree/0.1.5][0.1.5]]               |
 |     0.1.3 | 2016-03-19 | bugfix TA check, update ctors                 | [[https://github.com/thi-ng/typedarrays/tree/0.1.3][0.1.3]]               |
@@ -192,7 +193,7 @@ symbol =version= holding the version string defined above:
 
 | *Name*          | *Role*                          | *Website*                  |
 |-----------------+---------------------------------+----------------------------|
-| [[k@thi.ng][Karsten Schmidt]] | initiator & principal developer | http://postspectacular.com |
+| [[k@thi.ng][Karsten Schmidt]] | initiator & principal developer | https://thi.ng |
 
 ** License
 
